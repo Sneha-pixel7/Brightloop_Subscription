@@ -20,6 +20,8 @@ class BrightloopSubscription(models.Model):
         ('draft', 'Draft'), ('active', 'Active'), ('paused', 'Paused'),
         ('cancelled', 'Cancelled'), ('expired', 'Expired'),
     ], default='draft', tracking=True)
+    invoice_ids = fields.One2many(
+        'account.move', 'brightloop_subscription_id', string='Invoices')
 
     @api.depends('partner_id', 'plan_id')
     def _compute_name(self):
@@ -60,3 +62,25 @@ class BrightloopSubscription(models.Model):
 
     def action_cancel(self):
         self.write({'state': 'cancelled'})
+
+    def action_create_invoice(self):
+        self.ensure_one()
+        if self.state != 'active':
+            raise ValidationError("Only active subscriptions can be invoiced.")
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_id.id,
+            'invoice_date': fields.Date.context_today(self),
+            'brightloop_subscription_id': self.id,
+            'invoice_line_ids': [(0, 0, {
+                'name': '%s (%s)' % (self.plan_id.name, self.plan_id.billing_period),
+                'quantity': 1,
+                'price_unit': self.plan_id.price,
+            })],
+        })
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'account.move',
+            'res_id': invoice.id,
+            'view_mode': 'form',
+        }
