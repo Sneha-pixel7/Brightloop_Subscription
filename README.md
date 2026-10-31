@@ -88,7 +88,10 @@ docker compose restart odoo
 | Name | GitHub |
 |---|---|
 | Sneha | @Sneha-pixel7 |
-| (teammate name) | @(teammate-username) |
+| Suman Jabin | @sumanjabin2020 |
+| Saniya | @itsmeenorahh |
+| Adhil S Mohammed | @adhilspinford-dev |
+
 
 ## Git Workflow
 
