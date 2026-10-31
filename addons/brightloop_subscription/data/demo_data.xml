@@ -1,0 +1,72 @@
+<odoo noupdate="1">
+    <record id="plan_basic" model="brightloop.plan">
+        <field name="name">Basic</field>
+        <field name="billing_period">monthly</field>
+        <field name="price">499</field>
+        <field name="description">Essential access, billed monthly</field>
+    </record>
+    <record id="plan_pro" model="brightloop.plan">
+        <field name="name">Pro</field>
+        <field name="billing_period">monthly</field>
+        <field name="price">999</field>
+        <field name="description">Full access with priority support, billed monthly</field>
+    </record>
+    <record id="plan_pro_yearly" model="brightloop.plan">
+        <field name="name">Pro Yearly</field>
+        <field name="billing_period">yearly</field>
+        <field name="price">9999</field>
+        <field name="description">Everything in Pro, billed once a year at a discount</field>
+    </record>
+
+    <record id="partner_aarav" model="res.partner">
+        <field name="name">Aarav Menon</field>
+        <field name="email">aarav@example.com</field>
+    </record>
+    <record id="partner_diya" model="res.partner">
+        <field name="name">Diya Nair</field>
+        <field name="email">diya@example.com</field>
+    </record>
+    <record id="partner_kabir" model="res.partner">
+        <field name="name">Kabir Joseph</field>
+        <field name="email">kabir@example.com</field>
+    </record>
+    <record id="partner_meera" model="res.partner">
+        <field name="name">Meera Thomas</field>
+        <field name="email">meera@example.com</field>
+    </record>
+    <record id="partner_rohan" model="res.partner">
+        <field name="name">Rohan Pillai</field>
+        <field name="email">rohan@example.com</field>
+    </record>
+
+    <record id="sub_aarav" model="brightloop.subscription">
+        <field name="partner_id" ref="partner_aarav"/>
+        <field name="plan_id" ref="plan_pro"/>
+        <field name="start_date" eval="(DateTime.today() - timedelta(days=10)).strftime('%Y-%m-%d')"/>
+        <field name="state">active</field>
+    </record>
+    <record id="sub_diya" model="brightloop.subscription">
+        <field name="partner_id" ref="partner_diya"/>
+        <field name="plan_id" ref="plan_basic"/>
+        <field name="start_date" eval="(DateTime.today() - timedelta(days=26)).strftime('%Y-%m-%d')"/>
+        <field name="state">active</field>
+    </record>
+    <record id="sub_kabir" model="brightloop.subscription">
+        <field name="partner_id" ref="partner_kabir"/>
+        <field name="plan_id" ref="plan_pro_yearly"/>
+        <field name="start_date" eval="(DateTime.today() - timedelta(days=90)).strftime('%Y-%m-%d')"/>
+        <field name="state">active</field>
+    </record>
+    <record id="sub_meera" model="brightloop.subscription">
+        <field name="partner_id" ref="partner_meera"/>
+        <field name="plan_id" ref="plan_basic"/>
+        <field name="start_date" eval="(DateTime.today() - timedelta(days=15)).strftime('%Y-%m-%d')"/>
+        <field name="state">paused</field>
+    </record>
+    <record id="sub_rohan" model="brightloop.subscription">
+        <field name="partner_id" ref="partner_rohan"/>
+        <field name="plan_id" ref="plan_pro"/>
+        <field name="start_date" eval="(DateTime.today() - timedelta(days=60)).strftime('%Y-%m-%d')"/>
+        <field name="state">cancelled</field>
+    </record>
+</odoo>

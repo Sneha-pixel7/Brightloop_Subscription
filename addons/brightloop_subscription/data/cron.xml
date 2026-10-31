@@ -1,0 +1,12 @@
+<odoo>
+    <record id="ir_cron_brightloop_subscriptions" model="ir.cron">
+        <field name="name">Brightloop: renew and expire subscriptions</field>
+        <field name="model_id" ref="model_brightloop_subscription"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_process_subscriptions()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

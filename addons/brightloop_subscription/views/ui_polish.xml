@@ -1,0 +1,41 @@
+<odoo>
+    <record id="view_brightloop_subscription_tree_polish" model="ir.ui.view">
+        <field name="name">brightloop.subscription.tree.polish</field>
+        <field name="model">brightloop.subscription</field>
+        <field name="inherit_id" ref="view_brightloop_subscription_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="attributes">
+                <attribute name="widget">badge</attribute>
+                <attribute name="decoration-success">state == 'active'</attribute>
+                <attribute name="decoration-warning">state == 'paused'</attribute>
+                <attribute name="decoration-danger">state == 'cancelled'</attribute>
+                <attribute name="decoration-muted">state in ('draft', 'expired')</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="action_brightloop_subscription" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first subscription</p>
+            <p>Pick a customer and a plan, then activate it to start billing.</p>
+        </field>
+    </record>
+
+    <record id="action_brightloop_plan" model="ir.actions.act_window">
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first plan</p>
+            <p>Plans define the price and billing period customers subscribe to.</p>
+        </field>
+    </record>
+
+    <record id="action_brightloop_invoices" model="ir.actions.act_window">
+        <field name="name">Invoices</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('brightloop_subscription_id', '!=', False)]</field>
+        <field name="context">{'default_move_type': 'out_invoice'}</field>
+    </record>
+
+    <menuitem id="menu_brightloop_invoices" name="Invoices"
+              parent="menu_brightloop_root" action="action_brightloop_invoices" sequence="8"/>
+</odoo>
