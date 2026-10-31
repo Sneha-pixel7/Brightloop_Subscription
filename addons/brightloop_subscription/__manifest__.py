@@ -8,6 +8,7 @@
         'security/ir.model.access.csv',
         'views/plan_views.xml',
         'views/subscription_views.xml',
+        'data/cron.xml',
     ],
     'installable': True,
     'application': True,
