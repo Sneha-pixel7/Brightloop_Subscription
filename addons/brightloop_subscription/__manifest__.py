@@ -10,6 +10,7 @@
         'views/subscription_views.xml',
         'views/dashboard_views.xml',
         'data/cron.xml',
+        'data/demo_data.xml',
     ],
     'installable': True,
     'application': True,
