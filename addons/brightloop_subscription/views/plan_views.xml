@@ -1,0 +1,40 @@
+<odoo>
+    <record id="view_brightloop_plan_tree" model="ir.ui.view">
+        <field name="name">brightloop.plan.tree</field>
+        <field name="model">brightloop.plan</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="billing_period"/>
+                <field name="price"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_brightloop_plan_form" model="ir.ui.view">
+        <field name="name">brightloop.plan.form</field>
+        <field name="model">brightloop.plan</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="billing_period"/>
+                        <field name="price"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_brightloop_plan" model="ir.actions.act_window">
+        <field name="name">Plans</field>
+        <field name="res_model">brightloop.plan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_brightloop_root" name="Brightloop" sequence="10"/>
+    <menuitem id="menu_brightloop_plans" name="Plans" parent="menu_brightloop_root"
+              action="action_brightloop_plan" sequence="10"/>
+</odoo>
