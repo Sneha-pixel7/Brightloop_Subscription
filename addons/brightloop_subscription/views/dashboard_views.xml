@@ -1,0 +1,80 @@
+<odoo>
+    <record id="view_brightloop_subscription_search" model="ir.ui.view">
+        <field name="name">brightloop.subscription.search</field>
+        <field name="model">brightloop.subscription</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="plan_id"/>
+                <filter name="active_subs" string="Active" domain="[('state', '=', 'active')]"/>
+                <filter name="at_risk" string="At Risk" domain="[('health', '=', 'at_risk')]"/>
+                <filter name="critical" string="Critical" domain="[('health', '=', 'critical')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_plan" string="Plan" context="{'group_by': 'plan_id'}"/>
+                    <filter name="group_health" string="Health" context="{'group_by': 'health'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_brightloop_subscription_graph" model="ir.ui.view">
+        <field name="name">brightloop.subscription.graph</field>
+        <field name="model">brightloop.subscription</field>
+        <field name="arch" type="xml">
+            <graph string="Subscriptions" type="bar" stacked="True">
+                <field name="plan_id"/>
+                <field name="health"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_brightloop_subscription_pivot" model="ir.ui.view">
+        <field name="name">brightloop.subscription.pivot</field>
+        <field name="model">brightloop.subscription</field>
+        <field name="arch" type="xml">
+            <pivot string="Subscriptions">
+                <field name="plan_id" type="row"/>
+                <field name="health" type="col"/>
+                <field name="price" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_brightloop_subscription_tree_health" model="ir.ui.view">
+        <field name="name">brightloop.subscription.tree.health</field>
+        <field name="model">brightloop.subscription</field>
+        <field name="inherit_id" ref="view_brightloop_subscription_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="health" widget="badge"
+                       decoration-success="health == 'healthy'"
+                       decoration-warning="health == 'at_risk'"
+                       decoration-danger="health == 'critical'"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_brightloop_subscription_form_health" model="ir.ui.view">
+        <field name="name">brightloop.subscription.form.health</field>
+        <field name="model">brightloop.subscription</field>
+        <field name="inherit_id" ref="view_brightloop_subscription_form"/>
+        <field name="arch" type="xml">
+            <field name="next_renewal_date" position="after">
+                <field name="health" widget="badge"
+                       decoration-success="health == 'healthy'"
+                       decoration-warning="health == 'at_risk'"
+                       decoration-danger="health == 'critical'"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="action_brightloop_dashboard" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">brightloop.subscription</field>
+        <field name="view_mode">graph,pivot,tree,form</field>
+    </record>
+
+    <menuitem id="menu_brightloop_dashboard" name="Dashboard"
+              parent="menu_brightloop_root" action="action_brightloop_dashboard" sequence="1"/>
+</odoo>
