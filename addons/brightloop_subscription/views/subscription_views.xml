@@ -25,6 +25,8 @@
                             invisible="state != 'active'"/>
                     <button name="action_cancel" string="Cancel" type="object"
                             invisible="state in ('cancelled', 'expired')"/>
+                    <button name="action_create_invoice" string="Create Invoice" type="object"
+                            invisible="state != 'active'"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,active,paused,cancelled"/>
                 </header>
@@ -41,6 +43,18 @@
                             <field name="next_renewal_date"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Invoices">
+                            <field name="invoice_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="invoice_date"/>
+                                    <field name="amount_total"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids"/>
