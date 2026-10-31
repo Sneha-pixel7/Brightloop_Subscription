@@ -9,6 +9,7 @@
         'views/plan_views.xml',
         'views/subscription_views.xml',
         'views/dashboard_views.xml',
+        'views/ui_polish.xml',
         'data/cron.xml',
         'data/demo_data.xml',
     ],
