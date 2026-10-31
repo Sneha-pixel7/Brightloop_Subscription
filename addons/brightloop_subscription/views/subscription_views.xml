@@ -1,0 +1,61 @@
+<odoo>
+    <record id="view_brightloop_subscription_tree" model="ir.ui.view">
+        <field name="name">brightloop.subscription.tree</field>
+        <field name="model">brightloop.subscription</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="partner_id"/>
+                <field name="plan_id"/>
+                <field name="start_date"/>
+                <field name="next_renewal_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_brightloop_subscription_form" model="ir.ui.view">
+        <field name="name">brightloop.subscription.form</field>
+        <field name="model">brightloop.subscription</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_activate" string="Activate" type="object"
+                            class="btn-primary" invisible="state in ('active', 'cancelled', 'expired')"/>
+                    <button name="action_pause" string="Pause" type="object"
+                            invisible="state != 'active'"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state in ('cancelled', 'expired')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,active,paused,cancelled"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="plan_id"/>
+                            <field name="price"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="next_renewal_date"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_brightloop_subscription" model="ir.actions.act_window">
+        <field name="name">Subscriptions</field>
+        <field name="res_model">brightloop.subscription</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_brightloop_subscriptions" name="Subscriptions"
+              parent="menu_brightloop_root" action="action_brightloop_subscription" sequence="5"/>
+</odoo>
