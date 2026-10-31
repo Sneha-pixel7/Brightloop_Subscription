@@ -78,6 +78,7 @@ class BrightloopSubscription(models.Model):
                 'price_unit': self.plan_id.price,
             })],
         })
+        invoice.action_post()
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'account.move',
